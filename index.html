@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronograma de Estudos - Vestibular UFU 2025-2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-slate-100">
+    <div id="app" class="min-h-screen p-4 md:p-8"></div>
+
+    <script>
+        const subjects = {
+            fisica: { name: 'FÍSICA', color: 'bg-blue-500', textColor: 'text-blue-700', bgLight: 'bg-blue-50', borderColor: 'border-blue-500' },
+            biologia: { name: 'BIOLOGIA', color: 'bg-green-500', textColor: 'text-green-700', bgLight: 'bg-green-50', borderColor: 'border-green-500' },
+            matematica: { name: 'MATEMÁTICA', color: 'bg-red-500', textColor: 'text-red-700', bgLight: 'bg-red-50', borderColor: 'border-red-500' },
+            quimica: { name: 'QUÍMICA', color: 'bg-purple-500', textColor: 'text-purple-700', bgLight: 'bg-purple-50', borderColor: 'border-purple-500' }
+        };
+
+        const schedule = [
+            // FEVEREIRO
+            { date: '02/02', day: 'Seg', subject: 'fisica', topic: 'Forças em sistemas mecânicos, interações internas e externas' },
+            { date: '03/02', day: 'Ter', subject: 'biologia', topic: 'Ecologia - Ecossistemas' },
+            { date: '04/02', day: 'Qua', subject: 'matematica', topic: 'Conjuntos e Análise Combinatória' },
+            { date: '05/02', day: 'Qui', subject: 'quimica', topic: 'O estudo da Matéria' },
+            { date: '06/02', day: 'Sex', subject: 'fisica', topic: 'Energia e trabalho' },
+            { date: '09/02', day: 'Seg', subject: 'biologia', topic: 'Ecologia - Populações e Comunidades' },
+            { date: '10/02', day: 'Ter', subject: 'matematica', topic: 'Conjuntos Numéricos' },
+            { date: '11/02', day: 'Qua', subject: 'quimica', topic: 'Os modelos representativos da constituição da matéria' },
+            { date: '12/02', day: 'Qui', subject: 'fisica', topic: 'Dinâmica Impulsiva' },
+            { date: '13/02', day: 'Sex', subject: 'biologia', topic: 'Reprodução Humana - Anatomia e fisiologia' },
+            { date: '16/02', day: 'Seg', subject: 'matematica', topic: 'Razões e proporções' },
+            { date: '17/02', day: 'Ter', subject: 'quimica', topic: 'A tabela periódica' },
+            { date: '18/02', day: 'Qua', subject: 'fisica', topic: 'Calor e temperatura' },
+            { date: '19/02', day: 'Qui', subject: 'biologia', topic: 'Reprodução Humana - Fecundação e Gravidez' },
+            { date: '20/02', day: 'Sex', subject: 'matematica', topic: 'Funções - Noção e classificação' },
+            { date: '23/02', day: 'Seg', subject: 'quimica', topic: 'Propriedades dos materiais e modelos de Ligações Químicas' },
+            { date: '24/02', day: 'Ter', subject: 'fisica', topic: 'Gases ideais e Leis da Termodinâmica' },
+            { date: '25/02', day: 'Qua', subject: 'biologia', topic: 'Embriogênese - Gametogênese' },
+            { date: '26/02', day: 'Qui', subject: 'matematica', topic: 'Funções - Equações e inequações' },
+            { date: '27/02', day: 'Sex', subject: 'quimica', topic: 'Compostos Inorgânicos: ácidos, bases, sais e óxidos' },
+            
+            // MARÇO
+            { date: '02/03', day: 'Seg', subject: 'fisica', topic: 'Princípios gerais da ondulatória' },
+            { date: '03/03', day: 'Ter', subject: 'biologia', topic: 'Citologia - Características celulares e composição química' },
+            { date: '04/03', day: 'Qua', subject: 'matematica', topic: 'Funções - Representação gráfica e transformações' },
+            { date: '05/03', day: 'Qui', subject: 'quimica', topic: 'Grandezas químicas' },
+            { date: '06/03', day: 'Sex', subject: 'fisica', topic: 'Fenômenos ondulatórios e da luz - Reflexão' },
+            { date: '09/03', day: 'Seg', subject: 'biologia', topic: 'Citologia - Bioenergética' },
+            { date: '10/03', day: 'Ter', subject: 'matematica', topic: 'Funções - Função composta e inversa' },
+            { date: '11/03', day: 'Qua', subject: 'quimica', topic: 'Soluções' },
+            { date: '12/03', day: 'Qui', subject: 'fisica', topic: 'Fenômenos ondulatórios e da luz - Refração' },
+            { date: '13/03', day: 'Sex', subject: 'biologia', topic: 'Citologia - Núcleo e Reprodução celular' },
+            { date: '16/03', day: 'Seg', subject: 'matematica', topic: 'Progressões' },
+            { date: '17/03', day: 'Ter', subject: 'quimica', topic: 'Efeito coligativo dos solutos nas soluções' },
+            { date: '18/03', day: 'Qua', subject: 'fisica', topic: 'Ondas eletromagnéticas' },
+            { date: '19/03', day: 'Qui', subject: 'biologia', topic: 'Histologia' },
+            { date: '20/03', day: 'Sex', subject: 'matematica', topic: 'Trigonometria - Arcos e ângulos' },
+            { date: '23/03', day: 'Seg', subject: 'quimica', topic: 'Aspectos quali e quantitativos de reações químicas' },
+            { date: '24/03', day: 'Ter', subject: 'fisica', topic: 'Geração, transporte e distribuição de energia' },
+            { date: '25/03', day: 'Qua', subject: 'biologia', topic: 'Fisiologia animal - Digestão e Sistemas' },
+            { date: '26/03', day: 'Qui', subject: 'matematica', topic: 'Trigonometria - Identidades e fórmulas' },
+            { date: '27/03', day: 'Sex', subject: 'quimica', topic: 'Termoquímica' },
+            { date: '30/03', day: 'Seg', subject: 'fisica', topic: 'Interações eletromagnéticas - Carga elétrica' },
+            { date: '31/03', day: 'Ter', subject: 'biologia', topic: 'Diversidade e Classificação dos seres vivos' },
+            
+            // ABRIL
+            { date: '01/04', day: 'Qua', subject: 'matematica', topic: 'Matrizes, Determinantes e Sistemas Lineares' },
+            { date: '02/04', day: 'Qui', subject: 'quimica', topic: 'Cinética química' },
+            { date: '03/04', day: 'Sex', subject: 'fisica', topic: 'Interações eletromagnéticas - Força e campo elétrico' },
+            { date: '06/04', day: 'Seg', subject: 'biologia', topic: 'Morfologia e Fisiologia de fanerógamas' },
+            { date: '07/04', day: 'Ter', subject: 'matematica', topic: 'Geometria Plana - Relações e teoremas' },
+            { date: '08/04', day: 'Qua', subject: 'quimica', topic: 'Equilíbrio Químico' },
+            { date: '09/04', day: 'Qui', subject: 'fisica', topic: 'Interações eletromagnéticas - Corrente elétrica e circuitos' },
+            { date: '10/04', day: 'Sex', subject: 'biologia', topic: 'Genética - Herança mendeliana' },
+            { date: '13/04', day: 'Seg', subject: 'matematica', topic: 'Geometria Plana - Áreas' },
+            { date: '14/04', day: 'Ter', subject: 'quimica', topic: 'Eletroquímica' },
+            { date: '15/04', day: 'Qua', subject: 'fisica', topic: 'Interações eletromagnéticas - Eletromagnetismo' },
+            { date: '16/04', day: 'Qui', subject: 'biologia', topic: 'Genética - Grupos sanguíneos e determinação do sexo' },
+            { date: '17/04', day: 'Sex', subject: 'matematica', topic: 'Geometria Espacial' },
+            { date: '20/04', day: 'Seg', subject: 'quimica', topic: 'Química dos compostos do carbono' },
+            { date: '22/04', day: 'Qua', subject: 'fisica', topic: 'Partículas elementares, Astronomia e gravitação' },
+            { date: '23/04', day: 'Qui', subject: 'biologia', topic: 'Genética - Interações gênicas e Linkage' },
+            { date: '24/04', day: 'Sex', subject: 'matematica', topic: 'Probabilidade e Estatística' },
+            { date: '27/04', day: 'Seg', subject: 'quimica', topic: 'Compostos orgânicos' },
+            { date: '28/04', day: 'Ter', subject: 'fisica', topic: 'Revisão - Mecânica' },
+            { date: '29/04', day: 'Qua', subject: 'biologia', topic: 'Evolução e origem da Vida' },
+            { date: '30/04', day: 'Qui', subject: 'matematica', topic: 'Geometria Analítica Plana' },
+            
+            // MAIO
+            { date: '01/05', day: 'Sex', subject: 'quimica', topic: 'Isomeria e Reações orgânicas' },
+            { date: '02/05', day: 'Sáb', subject: 'matematica', topic: 'Números Complexos, Polinômios e Equações Algébricas' },
+            { date: '05/05', day: 'Seg', subject: 'quimica', topic: 'Produção industrial envolvendo produtos químicos' },
+            { date: '06/05', day: 'Ter', subject: 'quimica', topic: 'Atividade de mineração no Brasil e no mundo' },
+            { date: '07/05', day: 'Qua', subject: 'quimica', topic: 'Impacto ambiental da atividade química' },
+            { date: '08/05', day: 'Qui', subject: 'quimica', topic: 'Química e energia' }
+        ];
+
+        // Estado da aplicação
+        let completedDays = [];
+        let currentFilter = 'all';
+        let saveStatus = '';
+
+        // Carregar progresso do localStorage
+        function loadProgress() {
+            try {
+                const saved = localStorage.getItem('cronograma-ufu-progress');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    completedDays = data.completed || [];
+                }
+            } catch (error) {
+                console.log('Nenhum progresso anterior encontrado');
+            }
+        }
+
+        // Salvar progresso no localStorage
+        function saveProgress() {
+            try {
+                localStorage.setItem('cronograma-ufu-progress', JSON.stringify({
+                    completed: completedDays,
+                    lastUpdate: new Date().toISOString()
+                }));
+                showSaveStatus('✓ Salvo');
+            } catch (error) {
+                showSaveStatus('✗ Erro ao salvar');
+            }
+        }
+
+        // Mostrar status de salvamento
+        function showSaveStatus(message) {
+            saveStatus = message;
+            render();
+            setTimeout(() => {
+                saveStatus = '';
+                render();
+            }, 2000);
+        }
+
+        // Toggle dia completo
+        function toggleDay(date) {
+            if (completedDays.includes(date)) {
+                completedDays = completedDays.filter(d => d !== date);
+            } else {
+                completedDays.push(date);
+            }
+            saveProgress();
+            render();
+        }
+
+        // Resetar progresso
+        function resetProgress() {
+            if (confirm('Tem certeza que deseja apagar todo o progresso? Esta ação não pode ser desfeita.')) {
+                localStorage.removeItem('cronograma-ufu-progress');
+                completedDays = [];
+                showSaveStatus('✓ Progresso resetado');
+                render();
+            }
+        }
+
+        // Aplicar filtro
+        function setFilter(filter) {
+            currentFilter = filter;
+            render();
+        }
+
+        // Calcular estatísticas
+        function getStats() {
+            return {
+                total: schedule.length,
+                completed: completedDays.length,
+                fisica: schedule.filter(s => s.subject === 'fisica').length,
+                biologia: schedule.filter(s => s.subject === 'biologia').length,
+                matematica: schedule.filter(s => s.subject === 'matematica').length,
+                quimica: schedule.filter(s => s.subject === 'quimica').length
+            };
+        }
+
+        // Renderizar a aplicação
+        function render() {
+            const stats = getStats();
+            const progress = (stats.completed / stats.total * 100).toFixed(1);
+            const filteredSchedule = currentFilter === 'all' 
+                ? schedule 
+                : schedule.filter(item => item.subject === currentFilter);
+
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="max-w-7xl mx-auto">
+                    <!-- Header -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-6">
+                        <div class="flex items-center gap-4 mb-4 flex-wrap">
+                            <div class="bg-gradient-to-br from-blue-500 to-purple-600 p-3 rounded-xl">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <h1 class="text-3xl md:text-4xl font-bold text-slate-800">Cronograma de Estudos</h1>
+                                <p class="text-slate-600 mt-1">Vestibular UFU 2025-2 • 02/02 a 08/05</p>
+                            </div>
+                            ${saveStatus ? `<div class="bg-green-100 text-green-700 px-4 py-2 rounded-lg text-sm font-medium fade-in">${saveStatus}</div>` : ''}
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="mt-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-slate-700">Progresso Geral</span>
+                                <span class="text-sm font-bold text-slate-800">${progress}%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-3">
+                                <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-500" style="width: ${progress}%"></div>
+                            </div>
+                            <div class="flex justify-between mt-2 text-xs text-slate-600">
+                                <span>${stats.completed} de ${stats.total} dias concluídos</span>
+                                <span>${stats.total - stats.completed} restantes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-white rounded-xl shadow p-4 border-l-4 ${subjects.fisica.borderColor}">
+                            <p class="text-xs text-slate-600 uppercase font-medium">Física</p>
+                            <p class="text-2xl font-bold ${subjects.fisica.textColor}">${stats.fisica}</p>
+                        </div>
+                        <div class="bg-white rounded-xl shadow p-4 border-l-4 ${subjects.biologia.borderColor}">
+                            <p class="text-xs text-slate-600 uppercase font-medium">Biologia</p>
+                            <p class="text-2xl font-bold ${subjects.biologia.textColor}">${stats.biologia}</p>
+                        </div>
+                        <div class="bg-white rounded-xl shadow p-4 border-l-4 ${subjects.matematica.borderColor}">
+                            <p class="text-xs text-slate-600 uppercase font-medium">Matemática</p>
+                            <p class="text-2xl font-bold ${subjects.matematica.textColor}">${stats.matematica}</p>
+                        </div>
+                        <div class="bg-white rounded-xl shadow p-4 border-l-4 ${subjects.quimica.borderColor}">
+                            <p class="text-xs text-slate-600 uppercase font-medium">Química</p>
+                            <p class="text-2xl font-bold ${subjects.quimica.textColor}">${stats.quimica}</p>
+                        </div>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="bg-white rounded-xl shadow-lg p-4 mb-6">
+                        <div class="flex flex-wrap gap-2 items-center justify-between">
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="setFilter('all')" class="px-4 py-2 rounded-lg font-medium transition-all ${currentFilter === 'all' ? 'bg-slate-800 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
+                                    Todas
+                                </button>
+                                ${Object.entries(subjects).map(([key, subject]) => `
+                                    <button onclick="setFilter('${key}')" class="px-4 py-2 rounded-lg font-medium transition-all ${currentFilter === key ? `${subject.color} text-white` : `${subject.bgLight} ${subject.textColor} hover:opacity-80`}">
+                                        ${subject.name}
+                                    </button>
+                                `).join('')}
+                            </div>
+                            <button onclick="resetProgress()" class="px-4 py-2 bg-red-100 text-red-700 hover:bg-red-200 rounded-lg font-medium transition-all text-sm">
+                                🗑️ Resetar Progresso
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Schedule List -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                        <div class="divide-y divide-slate-100">
+                            ${filteredSchedule.map((item, index) => {
+                                const isCompleted = completedDays.includes(item.date);
+                                const subjectInfo = subjects[item.subject];
+                                return `
+                                    <div onclick="toggleDay('${item.date}')" class="p-4 hover:bg-slate-50 cursor-pointer transition-all ${isCompleted ? 'bg-slate-50' : ''}">
+                                        <div class="flex items-start gap-4">
+                                            <div class="flex-shrink-0 mt-1">
+                                                ${isCompleted ? `
+                                                    <svg class="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                    </svg>
+                                                ` : `
+                                                    <svg class="w-6 h-6 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
+                                                    </svg>
+                                                `}
+                                            </div>
+                                            <div class="flex-shrink-0 text-center">
+                                                <div class="text-xs text-slate-500 uppercase">${item.day}</div>
+                                                <div class="text-lg font-bold text-slate-800">${item.date}</div>
+                                            </div>
+                                            <div class="${subjectInfo.color} text-white px-3 py-1 rounded-lg text-sm font-bold flex-shrink-0">
+                                                ${subjectInfo.name}
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <p class="text-sm md:text-base font-medium ${isCompleted ? 'line-through text-slate-400' : 'text-slate-800'}">
+                                                    ${item.topic}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="mt-8 text-center">
+                        <div class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path>
+                                <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="font-bold">Foco total rumo à aprovação! 🎯</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Inicializar a aplicação
+        loadProgress();
+        render();
+    </script>
+</body>
+</html>
